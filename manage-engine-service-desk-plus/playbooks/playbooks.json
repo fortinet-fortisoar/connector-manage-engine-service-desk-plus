@@ -1,0 +1,1216 @@
+{
+  "type": "workflow_collections",
+  "data": [
+    {
+      "uuid": "8a95c83c-f496-421b-bb8e-3dc223224fab",
+      "@type": "WorkflowCollection",
+      "name": "Sample - ManageEngine ServiceDesk Plus - 3.0.0",
+      "description": "ManageEngine ServiceDesk Plus connector provides automated actions to create, update, delete and close tickets",
+      "visible": true,
+      "image": null,
+      "recordTags": [
+        "ManageEngine",
+        "manage-engine-service-desk-plus"
+      ],
+      "workflows": [
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get All Open Tickets",
+          "aliasName": null,
+          "tag": "#ManageEngine ServiceDesk Plus",
+          "description": "Retrieves information of all open ticket from Service Desk Plus.",
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "lastModifyDate": 1673500933,
+          "collection": "/api/3/workflow_collections/8a95c83c-f496-421b-bb8e-3dc223224fab",
+          "versions": [],
+          "triggerStep": "/api/3/workflow_steps/4cf78331-ae28-459f-902c-957965322eda",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Get All Open Tickets",
+              "description": null,
+              "arguments": {
+                "name": "ManageEngine ServiceDesk Plus",
+                "config": "''",
+                "params": {
+                  "from": 1,
+                  "other_fields": "",
+                  "priority.name": ""
+                },
+                "version": "3.0.0",
+                "connector": "manage-engine-service-desk-plus",
+                "operation": "get_all_open_requests",
+                "operationTitle": "Get All Open Tickets",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "top": "165",
+              "left": "125",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "group": null,
+              "uuid": "2b4b721a-3d35-45cb-a8a2-e82bcb4d6217"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "arguments": {
+                "route": "9856e8cc-6b71-4f9c-b34e-3e9fb770e159",
+                "title": "ManageEngine ServiceDesk Plus: Get All Open Tickets",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "executeButtonText": "Execute",
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "top": "30",
+              "left": "125",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "group": null,
+              "uuid": "4cf78331-ae28-459f-902c-957965322eda"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "name": "Start-> Get All Open Tickets",
+              "targetStep": "/api/3/workflow_steps/2b4b721a-3d35-45cb-a8a2-e82bcb4d6217",
+              "sourceStep": "/api/3/workflow_steps/4cf78331-ae28-459f-902c-957965322eda",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "3303e485-48d7-4f81-9c4a-49abf424f30b"
+            }
+          ],
+          "groups": [],
+          "priority": null,
+          "uuid": "ce971c6c-8a1a-4fc1-b73b-daba0c668890",
+          "id": 2375,
+          "owners": [],
+          "isPrivate": false,
+          "deletedAt": null,
+          "importedBy": [],
+          "recordTags": [
+            "ManageEngine",
+            "manage-engine-service-desk-plus"
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Create Ticket",
+          "aliasName": null,
+          "tag": "#ManageEngine ServiceDesk Plus",
+          "description": "Creates a ticket in Service Desk Plus based on the requester name and subject and other input parameters you have specified.",
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "lastModifyDate": 1673500875,
+          "collection": "/api/3/workflow_collections/8a95c83c-f496-421b-bb8e-3dc223224fab",
+          "versions": [],
+          "triggerStep": "/api/3/workflow_steps/9aa8dcef-48cb-4282-ac4c-97c46719853a",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "arguments": {
+                "route": "7391ea8a-8d31-4021-b361-e5f056814941",
+                "title": "ManageEngine ServiceDesk Plus: Create Ticket",
+                "resources": [
+                  "incidents"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "params": [],
+                    "records": "{{vars.input.records}}"
+                  },
+                  "incidents_status_map": "{\n\"Open\":{{\"IncidentStatus\" | picklist(\"Open\")}},\n\"Resolved\":{{\"IncidentStatus\" | picklist(\"Resolved\")}},\n\"In Progress\":{{\"IncidentStatus\" | picklist(\"In Progress\")}},\n\"Onhold\":{{\"IncidentStatus\" | picklist(\"Awaiting\")}},\n\"Assigned\":{{\"IncidentStatus\" | picklist(\"In Progress\")}},\n\"Cancelled\":{{\"IncidentStatus\" | picklist(\"Inactive\")}},\n\"Closed\":{{\"IncidentStatus\" | picklist(\"Resolved\")}}\n}"
+                },
+                "executeButtonText": "Execute",
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "top": "30",
+              "left": "125",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "group": null,
+              "uuid": "9aa8dcef-48cb-4282-ac4c-97c46719853a"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Create Ticket",
+              "description": null,
+              "arguments": {
+                "name": "ManageEngine ServiceDesk Plus",
+                "config": "1cad7ff9-0193-4195-81d7-e1edb7b2b623",
+                "params": {
+                  "group": "",
+                  "status": "",
+                  "subject": "",
+                  "urgency": "",
+                  "priority": "",
+                  "requester": "",
+                  "description": "",
+                  "other_fields": "",
+                  "request_type": ""
+                },
+                "version": "3.0.0",
+                "connector": "manage-engine-service-desk-plus",
+                "operation": "add_request",
+                "operationTitle": "Create Ticket",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "top": "165",
+              "left": "125",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "group": null,
+              "uuid": "c2e1181a-63f6-4b3d-80dc-0905f896b00b"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Create Incident",
+              "description": null,
+              "arguments": {
+                "resource": {
+                  "name": "{{vars.steps.Create_Ticket.data.request.subject}}",
+                  "phase": "/api/3/picklists/bb740542-f699-11e7-8c3f-9a214cf093ae",
+                  "resSla": "/api/3/picklists/72979f64-e8b9-4888-a965-957e0ec24818",
+                  "status": "{%if vars.steps.Create_Ticket.data.request.status.name | length > 0%}{{vars.steps.Create_Ticket.data.request.status.name | resolveRange(vars.incidents_status_map)}}{% else %}{{\"IncidentStatus\" | picklist(\"Open\")}}{% endif %}",
+                  "category": "/api/3/picklists/703218fc-f69a-11e7-8c3f-9a214cf093ae",
+                  "slaState": "/api/3/picklists/72979f64-e8b9-4888-a965-957e0ec24818",
+                  "sourceId": "{{vars.steps.Create_Ticket.data.request.id}}",
+                  "__replace": "false",
+                  "sourcedata": "{{vars.steps.Create_Ticket.data.request | toJSON}}",
+                  "slaPercentage": 0
+                },
+                "operation": "Overwrite",
+                "collection": "/api/3/upsert/incidents",
+                "__recommend": [],
+                "fieldOperation": [],
+                "step_variables": []
+              },
+              "status": null,
+              "top": "300",
+              "left": "125",
+              "stepType": "/api/3/workflow_step_types/2597053c-e718-44b4-8394-4d40fe26d357",
+              "group": null,
+              "uuid": "c7d8c949-8f1e-4072-a4a8-c569f58cb060"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "name": "Start -> Create Ticket",
+              "targetStep": "/api/3/workflow_steps/c2e1181a-63f6-4b3d-80dc-0905f896b00b",
+              "sourceStep": "/api/3/workflow_steps/9aa8dcef-48cb-4282-ac4c-97c46719853a",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "2d5a302d-b862-4f4c-a067-3591e07433ad"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Create Ticket -> Create Incident",
+              "targetStep": "/api/3/workflow_steps/c7d8c949-8f1e-4072-a4a8-c569f58cb060",
+              "sourceStep": "/api/3/workflow_steps/c2e1181a-63f6-4b3d-80dc-0905f896b00b",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "b46d5e8b-f460-4815-b06c-3fc6fcb55b2d"
+            }
+          ],
+          "groups": [],
+          "priority": null,
+          "uuid": "0e546e0b-42e5-44a6-b283-31a0bbd96525",
+          "id": 2369,
+          "owners": [],
+          "isPrivate": false,
+          "deletedAt": null,
+          "importedBy": [],
+          "recordTags": [
+            "ManageEngine",
+            "manage-engine-service-desk-plus"
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get Ticket Details",
+          "aliasName": null,
+          "tag": "#ManageEngine ServiceDesk Plus",
+          "description": "Retrieves details for a specific ticket from Service Desk Plus based on the Ticket Request ID you have specified.",
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "lastModifyDate": 1673500916,
+          "collection": "/api/3/workflow_collections/8a95c83c-f496-421b-bb8e-3dc223224fab",
+          "versions": [],
+          "triggerStep": "/api/3/workflow_steps/d32008fc-857c-4525-889c-3acece0d8d76",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Ticket Details",
+              "description": null,
+              "arguments": {
+                "name": "ManageEngine ServiceDesk Plus",
+                "config": "''",
+                "params": [],
+                "version": "3.0.0",
+                "connector": "manage-engine-service-desk-plus",
+                "operation": "get_request",
+                "operationTitle": "Get Ticket Details",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "top": "165",
+              "left": "125",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "group": null,
+              "uuid": "473428d5-4841-4976-a392-30f6ab0604cb"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "arguments": {
+                "route": "7af9a0d5-10bb-48ac-852d-160f66cbf894",
+                "title": "ManageEngine ServiceDesk Plus: Get Ticket Details",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "executeButtonText": "Execute",
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "top": "30",
+              "left": "125",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "group": null,
+              "uuid": "d32008fc-857c-4525-889c-3acece0d8d76"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "name": "Start-> Get Ticket Details",
+              "targetStep": "/api/3/workflow_steps/473428d5-4841-4976-a392-30f6ab0604cb",
+              "sourceStep": "/api/3/workflow_steps/d32008fc-857c-4525-889c-3acece0d8d76",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "415cb153-0d0e-4e4d-99eb-6b85c2a8851f"
+            }
+          ],
+          "groups": [],
+          "priority": null,
+          "uuid": "b682cb6d-ab4d-40d6-82fd-add4c4e25ead",
+          "id": 2373,
+          "owners": [],
+          "isPrivate": false,
+          "deletedAt": null,
+          "importedBy": [],
+          "recordTags": [
+            "ManageEngine",
+            "manage-engine-service-desk-plus"
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Update Ticket",
+          "aliasName": null,
+          "tag": "#ManageEngine ServiceDesk Plus",
+          "description": "Updates a ticket in Service Desk Plus based on the Ticket Request ID and other input parameters you have specified.",
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "lastModifyDate": 1673500941,
+          "collection": "/api/3/workflow_collections/8a95c83c-f496-421b-bb8e-3dc223224fab",
+          "versions": [],
+          "triggerStep": "/api/3/workflow_steps/ccc89117-3458-4955-9c5f-488779f49fbe",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Update Ticket",
+              "description": null,
+              "arguments": {
+                "name": "ManageEngine ServiceDesk Plus",
+                "config": "''",
+                "params": [],
+                "version": "3.0.0",
+                "connector": "manage-engine-service-desk-plus",
+                "operation": "update_request",
+                "operationTitle": "Update Ticket",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "top": "165",
+              "left": "125",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "group": null,
+              "uuid": "00c59f2d-37ec-41bc-a37b-0c22df4490cc"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "arguments": {
+                "route": "3bcd4513-b42c-4042-8fb2-9f35a251f637",
+                "title": "ManageEngine ServiceDesk Plus: Update Ticket",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "executeButtonText": "Execute",
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "top": "30",
+              "left": "125",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "group": null,
+              "uuid": "ccc89117-3458-4955-9c5f-488779f49fbe"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "name": "Start-> Update Ticket",
+              "targetStep": "/api/3/workflow_steps/00c59f2d-37ec-41bc-a37b-0c22df4490cc",
+              "sourceStep": "/api/3/workflow_steps/ccc89117-3458-4955-9c5f-488779f49fbe",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "70bc1787-42ac-4772-9a68-58fd9950ad37"
+            }
+          ],
+          "groups": [],
+          "priority": null,
+          "uuid": "aba928c4-141e-4339-ade3-77a7002c779e",
+          "id": 2376,
+          "owners": [],
+          "isPrivate": false,
+          "deletedAt": null,
+          "importedBy": [],
+          "recordTags": [
+            "ManageEngine",
+            "manage-engine-service-desk-plus"
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Close Ticket",
+          "aliasName": null,
+          "tag": "#ManageEngine ServiceDesk Plus",
+          "description": "Fuses a ticket in Service Desk Plus based on the Ticket Request ID you have specified.",
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "lastModifyDate": 1673500948,
+          "collection": "/api/3/workflow_collections/8a95c83c-f496-421b-bb8e-3dc223224fab",
+          "versions": [],
+          "triggerStep": "/api/3/workflow_steps/f92f4512-588f-479a-b92a-4fdeaee0afe4",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Close Ticket",
+              "description": "Fuses a ticket in Service Desk Plus based on the Ticket Request ID you have specified.",
+              "arguments": {
+                "name": "ManageEngine ServiceDesk Plus",
+                "config": "870f566d-7c41-4f66-a42a-b508a4e9e455",
+                "params": {
+                  "is_fcr": false,
+                  "request_id": "",
+                  "closure_code": "",
+                  "closure_comments": "",
+                  "requester_ack_comments": "",
+                  "requester_ack_resolution": false
+                },
+                "version": "3.0.0",
+                "connector": "manage-engine-service-desk-plus",
+                "operation": "close_request",
+                "operationTitle": "Close Ticket",
+                "pickFromTenant": false,
+                "step_variables": []
+              },
+              "status": null,
+              "top": "165",
+              "left": "125",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "group": null,
+              "uuid": "264f0695-2389-43bc-a6b6-ab5a3b581cf8"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "arguments": {
+                "route": "8c11900c-959a-4628-8fc1-39646cdba65b",
+                "title": "ManageEngine ServiceDesk Plus: Close Ticket",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "executeButtonText": "Execute",
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "top": "30",
+              "left": "125",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "group": null,
+              "uuid": "f92f4512-588f-479a-b92a-4fdeaee0afe4"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "name": "Start -> Close Ticket",
+              "targetStep": "/api/3/workflow_steps/264f0695-2389-43bc-a6b6-ab5a3b581cf8",
+              "sourceStep": "/api/3/workflow_steps/f92f4512-588f-479a-b92a-4fdeaee0afe4",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "dbe30a57-e8b0-4df4-a7dd-5e37a959a617"
+            }
+          ],
+          "groups": [],
+          "priority": null,
+          "uuid": "5fce8267-9462-4583-a2cb-42b026a53051",
+          "id": 2377,
+          "owners": [],
+          "isPrivate": false,
+          "deletedAt": null,
+          "importedBy": [],
+          "recordTags": [
+            "ManageEngine",
+            "manage-engine-service-desk-plus"
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Delete Ticket",
+          "aliasName": null,
+          "tag": "#ManageEngine ServiceDesk Plus",
+          "description": "Deletes a ticket from Service Desk Plus based on the Ticket Request ID you have specified.",
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "lastModifyDate": 1673500956,
+          "collection": "/api/3/workflow_collections/8a95c83c-f496-421b-bb8e-3dc223224fab",
+          "versions": [],
+          "triggerStep": "/api/3/workflow_steps/d3a9dd8c-bce6-4264-a94f-7cd8bef11e99",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Delete Ticket",
+              "description": null,
+              "arguments": {
+                "name": "ManageEngine ServiceDesk Plus",
+                "config": "''",
+                "params": [],
+                "version": "3.0.0",
+                "connector": "manage-engine-service-desk-plus",
+                "operation": "delete_request",
+                "operationTitle": "Delete Ticket",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "top": "165",
+              "left": "125",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "group": null,
+              "uuid": "78c5e8a9-e924-4c7e-8c49-936633490c2a"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "arguments": {
+                "route": "89c71842-128c-4e7c-9e25-0bfdd6b03794",
+                "title": "ManageEngine ServiceDesk Plus: Delete Ticket",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "executeButtonText": "Execute",
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "top": "30",
+              "left": "125",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "group": null,
+              "uuid": "d3a9dd8c-bce6-4264-a94f-7cd8bef11e99"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "name": "Start-> Delete Ticket",
+              "targetStep": "/api/3/workflow_steps/78c5e8a9-e924-4c7e-8c49-936633490c2a",
+              "sourceStep": "/api/3/workflow_steps/d3a9dd8c-bce6-4264-a94f-7cd8bef11e99",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "7f7d9fc4-7889-4a95-ac69-4d0da28126ef"
+            }
+          ],
+          "groups": [],
+          "priority": null,
+          "uuid": "1abc7135-e851-4436-9eed-89abf3ef90cd",
+          "id": 2378,
+          "owners": [],
+          "isPrivate": false,
+          "deletedAt": null,
+          "importedBy": [],
+          "recordTags": [
+            "ManageEngine",
+            "manage-engine-service-desk-plus"
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Delete Ticket From Trash",
+          "aliasName": null,
+          "tag": "#ManageEngine ServiceDesk Plus",
+          "description": "Deletes a ticket from trash in Service Desk Plus based on the Ticket Request ID you have specified.",
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "lastModifyDate": 1673500964,
+          "collection": "/api/3/workflow_collections/8a95c83c-f496-421b-bb8e-3dc223224fab",
+          "versions": [],
+          "triggerStep": "/api/3/workflow_steps/024a9bf9-368c-450b-875a-da4995bdc4b8",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "arguments": {
+                "route": "29768182-52e5-462c-996b-f598cc5a8109",
+                "title": "ManageEngine ServiceDesk Plus: Delete Ticket From Trash",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "executeButtonText": "Execute",
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "top": "30",
+              "left": "125",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "group": null,
+              "uuid": "024a9bf9-368c-450b-875a-da4995bdc4b8"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Delete Ticket From Trash",
+              "description": null,
+              "arguments": {
+                "name": "ManageEngine ServiceDesk Plus",
+                "config": "''",
+                "params": [],
+                "version": "3.0.0",
+                "connector": "manage-engine-service-desk-plus",
+                "operation": "delete_request_from_trash",
+                "operationTitle": "Delete Ticket From Trash",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "top": "165",
+              "left": "125",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "group": null,
+              "uuid": "ac0987c2-9e0d-4f78-a4bd-8c7f80807f14"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "name": "Start-> Delete Ticket From Trash",
+              "targetStep": "/api/3/workflow_steps/ac0987c2-9e0d-4f78-a4bd-8c7f80807f14",
+              "sourceStep": "/api/3/workflow_steps/024a9bf9-368c-450b-875a-da4995bdc4b8",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "1d9a3154-4eab-4698-bc64-7ec7ff10457f"
+            }
+          ],
+          "groups": [],
+          "priority": null,
+          "uuid": "913f3e50-f1c9-44f9-8736-8e11c0a6a52e",
+          "id": 2379,
+          "owners": [],
+          "isPrivate": false,
+          "deletedAt": null,
+          "importedBy": [],
+          "recordTags": [
+            "ManageEngine",
+            "manage-engine-service-desk-plus"
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Add Resolution",
+          "aliasName": null,
+          "tag": "#ManageEngine ServiceDesk Plus",
+          "description": "Adds a resolution to an existing ticket in Service Desk Plus based on the Ticket Request ID you have specified.",
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "lastModifyDate": 1673500898,
+          "collection": "/api/3/workflow_collections/8a95c83c-f496-421b-bb8e-3dc223224fab",
+          "versions": [],
+          "triggerStep": "/api/3/workflow_steps/ab9b6558-c4c6-4871-9467-f0cbcc1b1503",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Add Resolution",
+              "description": null,
+              "arguments": {
+                "name": "ManageEngine ServiceDesk Plus",
+                "config": "''",
+                "params": [],
+                "version": "3.0.0",
+                "connector": "manage-engine-service-desk-plus",
+                "operation": "add_resolution",
+                "operationTitle": "Add Resolution",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "top": "165",
+              "left": "125",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "group": null,
+              "uuid": "2e1611c2-c7fc-4b5e-9685-31e75e1755d5"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "arguments": {
+                "route": "ad42b1c1-e784-4ebf-8237-c474a0902c0b",
+                "title": "ManageEngine ServiceDesk Plus: Add Resolution",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "executeButtonText": "Execute",
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "top": "30",
+              "left": "125",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "group": null,
+              "uuid": "ab9b6558-c4c6-4871-9467-f0cbcc1b1503"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "name": "Start-> Add Resolution",
+              "targetStep": "/api/3/workflow_steps/2e1611c2-c7fc-4b5e-9685-31e75e1755d5",
+              "sourceStep": "/api/3/workflow_steps/ab9b6558-c4c6-4871-9467-f0cbcc1b1503",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "15f3a547-294b-4ed8-9339-6efb03145425"
+            }
+          ],
+          "groups": [],
+          "priority": null,
+          "uuid": "508ab986-41c4-4fa4-8c4a-e318ed1b585c",
+          "id": 2371,
+          "owners": [],
+          "isPrivate": false,
+          "deletedAt": null,
+          "importedBy": [],
+          "recordTags": [
+            "ManageEngine",
+            "manage-engine-service-desk-plus"
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Add Note",
+          "aliasName": null,
+          "tag": "#ManageEngine ServiceDesk Plus",
+          "description": "Adds a note to an existing ticket in Service Desk Plus based on the Ticket Request ID you have specified. You can choose whether the note will be a private note or a public note (visible to all).",
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "lastModifyDate": 1673500909,
+          "collection": "/api/3/workflow_collections/8a95c83c-f496-421b-bb8e-3dc223224fab",
+          "versions": [],
+          "triggerStep": "/api/3/workflow_steps/3dc5d0d3-7778-46cf-a6b6-1bc5a7cabd3a",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "arguments": {
+                "route": "84ebbad2-e155-4023-bc82-677573a38cb7",
+                "title": "ManageEngine ServiceDesk Plus: Add Note",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "executeButtonText": "Execute",
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "top": "30",
+              "left": "125",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "group": null,
+              "uuid": "3dc5d0d3-7778-46cf-a6b6-1bc5a7cabd3a"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Add Note",
+              "description": null,
+              "arguments": {
+                "name": "ManageEngine ServiceDesk Plus",
+                "config": "''",
+                "params": {
+                  "notify_technician": false,
+                  "show_to_requester": false,
+                  "mark_first_response": false,
+                  "add_to_linked_requests": false
+                },
+                "version": "3.0.0",
+                "connector": "manage-engine-service-desk-plus",
+                "operation": "add_note",
+                "operationTitle": "Add Note",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "top": "165",
+              "left": "125",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "group": null,
+              "uuid": "895dfdd8-5c69-4522-ac8c-fa519b8ab52d"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "name": "Start-> Add Note",
+              "targetStep": "/api/3/workflow_steps/895dfdd8-5c69-4522-ac8c-fa519b8ab52d",
+              "sourceStep": "/api/3/workflow_steps/3dc5d0d3-7778-46cf-a6b6-1bc5a7cabd3a",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "6071b4b9-c286-446e-861c-d471870c86e5"
+            }
+          ],
+          "groups": [],
+          "priority": null,
+          "uuid": "6dad8976-28bb-4f81-8911-c753ffcb00c8",
+          "id": 2372,
+          "owners": [],
+          "isPrivate": false,
+          "deletedAt": null,
+          "importedBy": [],
+          "recordTags": [
+            "ManageEngine",
+            "manage-engine-service-desk-plus"
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get All Requesters",
+          "aliasName": null,
+          "tag": "#ManageEngine ServiceDesk Plus",
+          "description": "Retrieves information of all requesters from Service Desk Plus.",
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "lastModifyDate": 1673500924,
+          "collection": "/api/3/workflow_collections/8a95c83c-f496-421b-bb8e-3dc223224fab",
+          "versions": [],
+          "triggerStep": "/api/3/workflow_steps/fcbbec97-ef32-4742-b55d-9a8275fa2c43",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Get All Requesters",
+              "description": null,
+              "arguments": {
+                "name": "ManageEngine ServiceDesk Plus",
+                "config": "''",
+                "params": {
+                  "other_fields": ""
+                },
+                "version": "3.0.0",
+                "connector": "manage-engine-service-desk-plus",
+                "operation": "get_all_requester",
+                "operationTitle": "Get All Requesters",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "top": "165",
+              "left": "125",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "group": null,
+              "uuid": "050d9c88-c837-4992-9fe5-987eb1a7e201"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "arguments": {
+                "route": "6796a037-9945-417f-943e-9866fe40f17e",
+                "title": "ManageEngine ServiceDesk Plus: Get All Requesters",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "executeButtonText": "Execute",
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "top": "30",
+              "left": "125",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "group": null,
+              "uuid": "fcbbec97-ef32-4742-b55d-9a8275fa2c43"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "name": "Start-> Get All Requesters",
+              "targetStep": "/api/3/workflow_steps/050d9c88-c837-4992-9fe5-987eb1a7e201",
+              "sourceStep": "/api/3/workflow_steps/fcbbec97-ef32-4742-b55d-9a8275fa2c43",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "dd995ada-f6a8-43a3-a832-7cd04e32a0ab"
+            }
+          ],
+          "groups": [],
+          "priority": null,
+          "uuid": "a212064c-1165-4226-b602-effa354f525a",
+          "id": 2374,
+          "owners": [],
+          "isPrivate": false,
+          "deletedAt": null,
+          "importedBy": [],
+          "recordTags": [
+            "ManageEngine",
+            "manage-engine-service-desk-plus"
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Update FortiSOARs Incident",
+          "aliasName": null,
+          "tag": "#ManageEngine ServiceDesk Plus",
+          "description": "Update FortiSOAR's record with ManageEngine ServiceDesk Plus Request details",
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "lastModifyDate": 1674045807,
+          "collection": "/api/3/workflow_collections/8a95c83c-f496-421b-bb8e-3dc223224fab",
+          "versions": [],
+          "triggerStep": "/api/3/workflow_steps/77e7c913-4594-4b29-92d8-85ddb5f5d4a1",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "No Operation",
+              "description": null,
+              "arguments": {
+                "params": [],
+                "version": "3.2.3",
+                "connector": "cyops_utilities",
+                "operation": "no_op",
+                "operationTitle": "Utils: No Operation",
+                "step_variables": []
+              },
+              "status": null,
+              "top": "440",
+              "left": "500",
+              "stepType": "/api/3/workflow_step_types/0109f35d-090b-4a2b-bd8a-94cbc3508562",
+              "group": null,
+              "uuid": "02558136-8aea-42f9-a2c4-18deb5732dfc"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Update Incident",
+              "description": null,
+              "arguments": {
+                "resource": {
+                  "status": "{{vars.response.status.name | resolveRange(vars.incidents_status_map)}}",
+                  "sourcedata": "{{vars.response | toJSON }}"
+                },
+                "_showJson": false,
+                "operation": "Overwrite",
+                "collection": "{{vars.steps.Search_incident[0]['@id']}}",
+                "__recommend": [],
+                "collectionType": "/api/3/incidents",
+                "fieldOperation": [],
+                "step_variables": []
+              },
+              "status": null,
+              "top": "440",
+              "left": "100",
+              "stepType": "/api/3/workflow_step_types/b593663d-7d13-40ce-a3a3-96dece928722",
+              "group": null,
+              "uuid": "640cb890-438a-48cb-97bb-8df3c117fd41"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "arguments": {
+                "route": "ManageEngine",
+                "step_variables": {
+                  "input": {
+                    "params": {
+                      "api_body": "{{vars.request.data}}"
+                    }
+                  },
+                  "response": "{{vars.input.params['api_body'].request}}",
+                  "incidents_status_map": "{\n\"Open\":{{\"IncidentStatus\" | picklist(\"Open\")}},\n\"Resolved\":{{\"IncidentStatus\" | picklist(\"Resolved\")}},\n\"In Progress\":{{\"IncidentStatus\" | picklist(\"In Progress\")}},\n\"Onhold\":{{\"IncidentStatus\" | picklist(\"Awaiting\")}},\n\"Assigned\":{{\"IncidentStatus\" | picklist(\"In Progress\")}},\n\"Cancelled\":{{\"IncidentStatus\" | picklist(\"Inactive\")}},\n\"Closed\":{{\"IncidentStatus\" | picklist(\"Resolved\")}}\n}"
+                },
+                "authentication_methods": [
+                  ""
+                ]
+              },
+              "status": null,
+              "top": "30",
+              "left": "300",
+              "stepType": "/api/3/workflow_step_types/df26c7a2-4166-4ca5-91e5-548e24c01b5f",
+              "group": null,
+              "uuid": "77e7c913-4594-4b29-92d8-85ddb5f5d4a1"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Search incident",
+              "description": null,
+              "arguments": {
+                "query": {
+                  "sort": [],
+                  "limit": 30,
+                  "logic": "AND",
+                  "filters": [
+                    {
+                      "type": "primitive",
+                      "field": "sourceId",
+                      "value": "{{vars.input.params.api_body.request.id}}",
+                      "operator": "eq",
+                      "_operator": "eq"
+                    }
+                  ],
+                  "__selectFields": [
+                    "id"
+                  ]
+                },
+                "module": "incidents?$limit=1",
+                "checkboxFields": true,
+                "step_variables": []
+              },
+              "status": null,
+              "top": "165",
+              "left": "300",
+              "stepType": "/api/3/workflow_step_types/b593663d-7d13-40ce-a3a3-96dece928770",
+              "group": null,
+              "uuid": "ba2519b0-5420-4243-b73e-50b92d682472"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Is Incident Exist",
+              "description": null,
+              "arguments": {
+                "conditions": [
+                  {
+                    "option": "Yes",
+                    "step_iri": "/api/3/workflow_steps/640cb890-438a-48cb-97bb-8df3c117fd41",
+                    "condition": "{{ vars.steps.Search_incident | length > 0 }}",
+                    "step_name": "Update Incident"
+                  },
+                  {
+                    "option": "No",
+                    "default": true,
+                    "step_iri": "/api/3/workflow_steps/02558136-8aea-42f9-a2c4-18deb5732dfc",
+                    "step_name": "No Operation"
+                  }
+                ]
+              },
+              "status": null,
+              "top": "300",
+              "left": "300",
+              "stepType": "/api/3/workflow_step_types/12254cf5-5db7-4b1a-8cb1-3af081924b28",
+              "group": null,
+              "uuid": "dced89f3-719d-4ca7-b5c0-8e6e6fce04f1"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "name": "Is Incident Exist -> No Operation",
+              "targetStep": "/api/3/workflow_steps/02558136-8aea-42f9-a2c4-18deb5732dfc",
+              "sourceStep": "/api/3/workflow_steps/dced89f3-719d-4ca7-b5c0-8e6e6fce04f1",
+              "label": "No",
+              "isExecuted": false,
+              "uuid": "755db33d-5fe4-48dd-80e8-a5c09bf328d3"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Start -> Search incident",
+              "targetStep": "/api/3/workflow_steps/ba2519b0-5420-4243-b73e-50b92d682472",
+              "sourceStep": "/api/3/workflow_steps/77e7c913-4594-4b29-92d8-85ddb5f5d4a1",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "7c05a6fd-2f84-4c63-aa11-f96ff2c23b9a"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Search incident -> Is Incident Exist",
+              "targetStep": "/api/3/workflow_steps/dced89f3-719d-4ca7-b5c0-8e6e6fce04f1",
+              "sourceStep": "/api/3/workflow_steps/ba2519b0-5420-4243-b73e-50b92d682472",
+              "label": null,
+              "isExecuted": false,
+              "uuid": "91b20ce9-e79b-47d4-a1bf-63ac3f78de67"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "name": "Is Incident Exist -> Update Incident",
+              "targetStep": "/api/3/workflow_steps/640cb890-438a-48cb-97bb-8df3c117fd41",
+              "sourceStep": "/api/3/workflow_steps/dced89f3-719d-4ca7-b5c0-8e6e6fce04f1",
+              "label": "Yes",
+              "isExecuted": false,
+              "uuid": "f8daf366-a017-42a1-ab08-3bd234e1c1e9"
+            }
+          ],
+          "groups": [],
+          "priority": null,
+          "uuid": "3b8f3476-eb2a-4674-9954-097479441dca",
+          "id": 2810,
+          "owners": [],
+          "isPrivate": false,
+          "deletedAt": null,
+          "importedBy": [],
+          "recordTags": [
+            "manage-engine-service-desk-plus",
+            "ManageEngine"
+          ]
+        }
+      ]
+    }
+  ]
+}
