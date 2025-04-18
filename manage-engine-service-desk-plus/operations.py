@@ -5,6 +5,8 @@
   Copyright end """
 import requests
 import json
+import re
+import urllib.parse
 from .constants import *
 from connectors.core.connector import get_logger, ConnectorError
 from .manage_engine_api_auth import ManageEngineAuth, check
@@ -314,6 +316,212 @@ def delete_request_from_trash(config, params):
         logger.error('Exception occurred: {0}'.format(Err))
         raise ConnectorError(Err)
 
+def get_request_task(config, params):
+    try:
+        obj = ManageEngine(config)
+        request_id = str(params.pop('id'))
+        task_id = str(params.pop('task_id'))
+        return obj.make_api_call(config=config,
+                                 method='GET',
+                                 endpoint=GET_TASK.format(request_id=request_id,task_id=task_id))
+
+    except Exception as Err:
+        logger.error('Exception occurred: {0}'.format(Err))
+        raise ConnectorError(Err)
+
+
+def get_list_request_task(config, params):
+    obj = ManageEngine(config)
+    try:
+        request_id = params.pop('id')
+        start_index = params.pop('start_index', 1)
+        size = params.pop('size', '100')
+        sort_field = params.pop('sort_field', 'created_time')
+        sort_order = params.pop('sort_order', 'Descending')
+        list_info = {
+            "start_index": start_index
+        }
+        if size:
+            list_info["row_count"] = size
+        if sort_field:
+            list_info.update({"sort_field": sort_field})
+        if sort_order:
+            list_info.update({"sort_order": SORT_ORDER.get(sort_order)})
+        input_data = json.dumps({"list_info": list_info})
+        return obj.make_api_call(config,
+                                 method='GET',
+                                 endpoint=GET_LIST_TASK.format(request_id=request_id),
+                                 params={"input_data": input_data})
+    except Exception as Err:
+        logger.error('Exception occurred: {0}'.format(Err))
+        raise ConnectorError(Err)
+
+
+def delete_request_task(config, params):
+    try:
+        obj = ManageEngine(config)
+
+        request_id = str(params.pop('id'))
+        task_id = str(params.pop('task_id'))
+        return obj.make_api_call(config=config,
+                                 method='DELETE',
+                                 endpoint=GET_TASK.format(request_id=request_id, task_id=task_id))
+
+    except Exception as Err:
+        logger.error('Exception occurred: {0}'.format(Err))
+        raise ConnectorError(Err)
+
+
+def add_request_task(config, params):
+    try:
+        obj = ManageEngine(config)
+        request_id = str(params.pop('id'))
+        # Build the task payload
+        task = {
+            "title": params.pop('title'),
+        }
+        # Optional fields
+        if params.get("description"):
+            task["description"] = params.pop("description")
+
+        if params.get("status"):
+            task["status"] = {"name": params.pop("status")}
+
+        if params.get("priority"):
+            task["priority"] = {"name": params.pop("priority")}
+
+        if params.get('group'):
+            task["group"] = {"name": params.pop('group')}
+        input_data = json.dumps({"task": task})
+        data = {"input_data": input_data}
+
+        # Make API call
+        return obj.make_api_call(config=config, method='POST', endpoint=ADD_TASK.format(request_id=request_id), data=data)
+    except Exception as Err:
+        logger.error('Exception occurred: {0}'.format(Err))
+        raise ConnectorError(Err)
+
+
+def edit_request_task(config, params):
+    try:
+        obj = ManageEngine(config)
+        request_id = str(params.pop('id'))
+        task_id = str(params.pop('task_id'))
+        # Build the task payload
+        task = {}
+        # Optional fields
+        if params.get("description"):
+            task["description"] = params.pop("description")
+
+        if params.get("status"):
+            task["status"] = {"name": params.pop("status")}
+
+        if params.get("priority"):
+            task["priority"] = {"name": params.pop("priority")}
+
+        if params.get('group'):
+            task["group"] = {"name": params.pop('group')}
+        input_data = json.dumps({"task": task})
+        data = {"input_data": input_data}
+        # Make API call
+        return obj.make_api_call(config=config, method='PUT',
+                                endpoint=EDIT_TASK.format(request_id=request_id,task_id=task_id),
+                                data=data)
+    except Exception as Err:
+        logger.error('Exception occurred: {0}'.format(Err))
+        raise ConnectorError(Err)
+
+
+def get_request_note(config, params):
+    obj = ManageEngine(config)
+    try:
+        request_id = params.pop('request_id')
+        request_note_id = params.pop('request_note_id')
+        return obj.make_api_call(config, method='GET',
+                                 endpoint=REQUEST_ENDPOINT + str(request_id) + '/notes/' + str(request_note_id))
+    except Exception as Err:
+        logger.error('Exception occurred: {0}'.format(Err))
+        raise ConnectorError(Err)
+
+
+def get_list_request_note(config, params):
+    obj = ManageEngine(config)
+    try:
+        request_id = params.pop('request_id')
+        return obj.make_api_call(config, method='GET',
+                                 endpoint=REQUEST_ENDPOINT + str(request_id) + '/notes')
+    except Exception as Err:
+        logger.error('Exception occurred: {0}'.format(Err))
+        raise ConnectorError(Err)
+
+
+def get_task_comments(config, params):
+    obj = ManageEngine(config)
+    try:
+        request_id = params.pop('request_id')
+        task_id = params.pop('task_id')
+        return obj.make_api_call(config, method='GET',
+                                 endpoint=REQUEST_ENDPOINT + str(request_id) + '/tasks/'+ str(task_id) + '/comments')
+    except Exception as Err:
+        logger.error('Exception occurred: {0}'.format(Err))
+        raise ConnectorError(Err)
+
+
+def list_attachments(config, params):
+    obj = ManageEngine(config)
+    try:
+        request_id = params.pop('request_id')
+        return obj.make_api_call(config, method='GET',
+                                 endpoint=REQUEST_ENDPOINT + str(request_id) + '/attachments')
+    except Exception as Err:
+        logger.error('Exception occurred: {0}'.format(Err))
+        raise ConnectorError(Err)
+
+
+def download_attachment(config, params):
+    obj = ManageEngine(config)
+    try:
+        endpoint = str(params.get('content_url'))
+
+        headers = {
+            'Accept': '*/*',
+            'Authtoken': obj.token,
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+
+        response = requests.get(url=f"{obj.server_url}{endpoint}", headers=headers, verify=obj.verify_ssl)
+
+        if response.status_code != 200:
+            raise ConnectorError(f"Error downloading file: {response.status_code}, Response: {response.text}")
+
+        content_disposition = response.headers.get("Content-Disposition", "")
+        filename = None
+
+        # Try extracting UTF-8 encoded filename*
+        filename_match = re.search(r'filename\*?=["\']?UTF-8\'\'([^;"\']+)', content_disposition)
+        if filename_match:
+            filename = urllib.parse.unquote(filename_match.group(1))  # Decode URL encoding
+
+        # If no UTF-8 filename, try extracting regular filename=
+        if not filename:
+            filename_match = re.search(r'filename=["\']?([^;"\']+)["\']?', content_disposition)
+            if filename_match:
+                filename = filename_match.group(1)
+
+        if not filename:
+            filename = "downloaded_file"
+
+        file_path = f"/tmp/{filename}"
+
+        with open(file_path, "wb") as file:
+            file.write(response.content)
+
+        return {"file_path": file_path, "file_name": filename, "message": "File downloaded successfully"}
+
+    except Exception as Err:
+        logger.error(f"Exception occurred in download_attachment: {Err}")
+        raise ConnectorError(Err)
+
 
 operations = {
     'add_request': add_request,
@@ -325,5 +533,15 @@ operations = {
     'update_request': update_request,
     'close_request': close_request,
     'delete_request': delete_request,
-    'delete_request_from_trash': delete_request_from_trash
+    'delete_request_from_trash': delete_request_from_trash,
+    'add_request_task': add_request_task,
+    'edit_request_task': edit_request_task,
+    'get_request_task': get_request_task,
+    'get_list_request_task': get_list_request_task,
+    'delete_request_task': delete_request_task,
+    'get_request_note': get_request_note,
+    'get_list_request_note': get_list_request_note,
+    'get_task_comments': get_task_comments,
+    'list_attachments': list_attachments,
+    'download_attachment': download_attachment
 }
