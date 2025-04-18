@@ -10,3 +10,7 @@ SORT_ORDER = {
 REQUEST_ENDPOINT = '/api/v3/requests/'
 REQUESTER_ENDPOINT = '/api/v3/users/'
 
+ADD_TASK = '/api/v3/requests/{request_id}/tasks'
+EDIT_TASK = '/api/v3/requests/{request_id}/tasks/{task_id}'
+GET_TASK = '/api/v3/requests/{request_id}/tasks/{task_id}'
+GET_LIST_TASK = '/api/v3/requests/{request_id}/tasks'
